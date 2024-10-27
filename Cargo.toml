@@ -1,0 +1,65 @@
+[package]
+name = "custom-leptos-components"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name <you@example.com>"]
+description = "A standalone version of Leptos' Portal component."
+license = "MIT"
+repository = "https://github.com/yourusername/my_portal"
+
+[dependencies]
+leptos = { version = "0.6", features = ["csr", "hydrate"] }
+leptos_dom = { version = "0.6", features = ["csr", "hydrate"] }
+leptos_macro = "0.6"
+leptos_reactive = "0.6"
+cfg-if = "1"
+wasm-bindgen = { version = "0.2"}
+web-sys = { version = "0.3.70", features = ["ShadowRoot", "ShadowRootInit", "ShadowRootMode"] }
+tracing="0.1"
+[features]
+default = ["csr"] # Enable client-side rendering by default
+csr = []          # Client-side rendering feature
+hydrate = []      # Hydration feature
+ssr=[]
+# [package]
+# name = "custom-leptos-components"
+# version = "0.1.0"
+# authors = ["Your Name"]
+# edition = "2021"
+
+# [dependencies]
+# leptos = { version = "0.6" }
+# leptos_dom = { version = "0.6"}
+# leptos_macro = { version = "0.6"}
+# leptos_reactive = {version="0.6"}
+# web-sys = { version = "0.3", features = ["ShadowRoot", "ShadowRootInit", "ShadowRootMode"] }
+# wasm-bindgen = { version = "0.2", optional = true}
+# cfg-if = "1.0"
+# leptos_server = "0.6.15"
+
+# [features]
+# default=["csr","hydrate"]
+# csr=["leptos/csr"]
+# hydrate=["leptos/hydrate"]
+# csr = [
+#   "leptos_dom/csr",
+#   "leptos_macro/csr",
+#   "leptos_reactive/csr",
+#   "leptos_server/csr",
+#   "dep:wasm-bindgen",
+# ]
+# hydrate = [
+#   "leptos_dom/hydrate",
+#   "leptos_macro/hydrate",
+#   "leptos_reactive/hydrate",
+#   "leptos_server/hydrate",
+#   "dep:wasm-bindgen",
+# ]
+# ssr = [
+#   "leptos_dom/ssr",
+#   "leptos_macro/ssr",
+#   "leptos_reactive/ssr",
+#   "leptos_server/ssr",
+# ]
+
+[dev-dependencies]
