@@ -4,16 +4,16 @@ use leptos::{ChildrenFn, MaybeSignal};
 // use leptos_macro::component;
 // use leptos_reactive::MaybeSignal;
 // use leptos_reactive::untrack;
-// use web_sys::HtmlDivElement;
+use web_sys::HtmlDivElement;
 use leptos_dom::IntoView;
 use leptos_macro::component;
 use leptos_reactive::untrack;
 use cfg_if::cfg_if;
-use wasm_bindgen::JsCast;
+// use wasm_bindgen::JsCast;
 
-use leptos_reactive::{create_effect, on_cleanup};
-use web_sys::{self, HtmlDivElement, ShadowRootMode};
-use leptos::SignalGet;
+// use leptos_reactive::{create_effect, on_cleanup};
+// use web_sys::{self, HtmlDivElement, ShadowRootMode};
+
 
 // #[allow(unused_variables)] 
 /// Renders components somewhere else in the DOM.
@@ -48,14 +48,19 @@ pub fn DynamicPortal(
             // use leptos_dom::{document, IntoView, View};
             // Effect that updates and mounts children reactively whenever `mount` changes
             use leptos_dom::{document, Mountable};
+            use leptos_reactive::{create_effect, on_cleanup};
+            use wasm_bindgen::JsCast;
+            // use web_sys::{self, HtmlDivElement, ShadowRootMode};
+            use leptos::SignalGet;
+
             create_effect(move |_| {
                 // Unwrap the `MaybeSignal` to get the current `mount` element reactively
-                let mount_element = mount.get();
+                let mount = mount.get();
                 // let mount_element = mount.
                 
 
                 // Proceed only if a valid `mount` element is provided
-                if let Some(mount_element) = mount_element {
+                if let Some(mount_element) = mount {
                     let tag = if is_svg { "g" } else { "div" };
                     let container = document()
                         .create_element(tag)
@@ -64,7 +69,7 @@ pub fn DynamicPortal(
                     // Optionally attach Shadow DOM for style isolation
                     let render_root = if use_shadow {
                         container
-                            .attach_shadow(&web_sys::ShadowRootInit::new(ShadowRootMode::Open))
+                            .attach_shadow(&web_sys::ShadowRootInit::new(web_sys::ShadowRootMode::Open))
                             .map(|root| root.unchecked_into())
                             .unwrap_or_else(|_| container.clone())
                     } else {
@@ -72,25 +77,32 @@ pub fn DynamicPortal(
                     };
 
                     // Render children into the container
-                    let children_view = untrack(|| children().into_view().get_mountable_node());
-                    render_root
-                        .append_child(&children_view)
-                        .expect("Failed to append children");
+                    let children = untrack(|| children().into_view().get_mountable_node());
+                    let _ = render_root.append_child(&children);
 
                     // Mount the container to the target element
-                    mount_element
-                        .append_child(&container)
-                        .expect("Failed to mount container");
+                    let _ = mount_element.append_child(&container);
 
                     // Cleanup: Remove the container when the component is destroyed
-                    on_cleanup(move || {
-                        let _ = mount_element.remove_child(&container);
-                    });
+                    on_cleanup({
+                            let mount = mount_element.clone();
+
+                            move || {
+                                let _ = mount.remove_child(&container);
+                            }
+                        })
+                    // on_cleanup(move || {
+                    //     let _ = mount_element.remove_child(&container);
+                    // });
                 }
             });
         } else {
             // SSR Fallback: Render an empty view
-            view! {}
+            let _ = mount;
+            let _ = use_shadow;
+            let _ = is_svg;
+            let _ = children;
+
         }
     }
 }
