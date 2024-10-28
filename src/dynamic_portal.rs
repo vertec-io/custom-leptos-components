@@ -10,7 +10,7 @@ use leptos_macro::component;
 use leptos_reactive::untrack;
 use cfg_if::cfg_if;
 use wasm_bindgen::JsCast;
-use leptos_dom::{document, Mountable};
+
 use leptos_reactive::{create_effect, on_cleanup};
 use web_sys::{self, HtmlDivElement, ShadowRootMode};
 use leptos::SignalGet;
@@ -47,6 +47,7 @@ pub fn DynamicPortal(
             // use wasm_bindgen::JsCast;
             // use leptos_dom::{document, IntoView, View};
             // Effect that updates and mounts children reactively whenever `mount` changes
+            use leptos_dom::{document, Mountable};
             create_effect(move |_| {
                 // Unwrap the `MaybeSignal` to get the current `mount` element reactively
                 let mount_element = mount.get();
