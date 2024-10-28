@@ -1,19 +1,9 @@
 use leptos::{ChildrenFn, MaybeSignal};
-// use leptos::*;
-// use leptos_dom::{Element, IntoView};
-// use leptos_macro::component;
-// use leptos_reactive::MaybeSignal;
-// use leptos_reactive::untrack;
 use web_sys::HtmlDivElement;
 use leptos_dom::IntoView;
 use leptos_macro::component;
-use leptos_reactive::untrack;
+
 use cfg_if::cfg_if;
-// use wasm_bindgen::JsCast;
-
-// use leptos_reactive::{create_effect, on_cleanup};
-// use web_sys::{self, HtmlDivElement, ShadowRootMode};
-
 
 // #[allow(unused_variables)] 
 /// Renders components somewhere else in the DOM.
@@ -42,22 +32,14 @@ pub fn DynamicPortal(
 ) -> impl IntoView {
     cfg_if! {
         if #[cfg(all(target_arch = "wasm32", any(feature = "hydrate", feature = "csr")))] {
-            // use leptos_reactive::{create_effect, on_cleanup};
-            // use web_sys::{Element, ShadowRootMode};
-            // use wasm_bindgen::JsCast;
-            // use leptos_dom::{document, IntoView, View};
             // Effect that updates and mounts children reactively whenever `mount` changes
             use leptos_dom::{document, Mountable};
             use leptos_reactive::{create_effect, on_cleanup};
             use wasm_bindgen::JsCast;
-            // use web_sys::{self, HtmlDivElement, ShadowRootMode};
             use leptos::SignalGet;
-
+            use leptos_reactive::untrack;
             create_effect(move |_| {
-                // Unwrap the `MaybeSignal` to get the current `mount` element reactively
                 let mount = mount.get();
-                // let mount_element = mount.
-                
 
                 // Proceed only if a valid `mount` element is provided
                 if let Some(mount_element) = mount {
@@ -91,9 +73,6 @@ pub fn DynamicPortal(
                                 let _ = mount.remove_child(&container);
                             }
                         })
-                    // on_cleanup(move || {
-                    //     let _ = mount_element.remove_child(&container);
-                    // });
                 }
             });
         } else {

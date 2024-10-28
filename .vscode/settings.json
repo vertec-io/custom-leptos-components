@@ -1,5 +1,7 @@
 {
     "rust-analyzer.cargo.target": "wasm32-unknown-unknown",
-    "rust-analyzer.cargo.features": ["csr", "hydrate"]
+    "rust-analyzer.cargo.features": [ "hydrate"]
+    // "rust-analyzer.cargo.features": [ "ssr"]
+    // "rust-analyzer.cargo.features": [ "csr"]
 
 }
