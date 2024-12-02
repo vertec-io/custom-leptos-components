@@ -1,6 +1,6 @@
 [package]
 name = "custom-leptos-components"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["Arturo Pino <apino@vertec.io>"]
 description = "A standalone version of Leptos' Portal component."
@@ -8,34 +8,38 @@ license = "MIT"
 # repository = "https://github.com/yourusername/my_portal"
 
 [dependencies]
-leptos = { version = "0.6" }
-leptos_dom = { version = "0.6" }
-leptos_macro = "0.6"
-leptos_reactive = "0.6"
+leptos = { version = "0.7" }
+leptos_dom = { version = "0.7" }
+leptos_macro = { version = "0.7" }
+leptos_reactive = { version = "0.7.0-preview2" }
+reactive_graph = { version = "0.1.0" }
+send_wrapper = { version = "0.6.0" }
 cfg-if = "1"
-wasm-bindgen = { version = "0.2"}
-web-sys = { version = "0.3.70"}
-tracing="0.1"
+wasm-bindgen = { version = "0.2" }
+web-sys = { version = "0.3.70" }
+tracing = "0.1"
 [features]
 default = []
 csr = [
     "leptos/csr",
-    "leptos_dom/csr",
+    # "leptos_dom/csr",
     "web-sys/ShadowRoot",
     "web-sys/ShadowRootInit",
     "web-sys/ShadowRootMode",
-    ]
+]
 hydrate = [
     "leptos/hydrate",
-    "leptos_dom/hydrate",
+    # "leptos_dom/hydrate",
     "web-sys/ShadowRoot",
     "web-sys/ShadowRootInit",
     "web-sys/ShadowRootMode",
 ]
-ssr=[
+ssr = [
     "leptos/ssr",
-    "leptos_dom/ssr"
+    # "leptos_dom/ssr"
 ]
-
+tracing = [
+    "leptos/tracing"
+]
 
 [dev-dependencies]
