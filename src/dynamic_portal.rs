@@ -13,7 +13,7 @@ use std::sync::Arc;
 /// Setting `use_shadow` to `true` places the element in a shadow root to isolate styles.
 #[cfg_attr(feature = "tracing", tracing::instrument(level = "trace", skip_all))]
 #[component]
-pub fn Portal<V>(
+pub fn DynamicPortal<V>(
     /// Target element where the children will be appended
     #[prop(into)]
     mount: ArcReadSignal<Option<web_sys::Element>>,
